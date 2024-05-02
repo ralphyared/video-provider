@@ -13,6 +13,9 @@ export class Video {
   description: string;
 
   @Prop()
+  url: string;
+
+  @Prop()
   duration: number;
 
   @Prop({ enum: AgeRestriction, default: AgeRestriction.EVERYONE })
