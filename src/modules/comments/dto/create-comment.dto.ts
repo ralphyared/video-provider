@@ -6,10 +6,6 @@ export class CreateCommentDto {
   @IsNotEmpty()
   userId: mongoose.Schema.Types.ObjectId;
 
-  @IsMongoId()
-  @IsNotEmpty()
-  videoId: mongoose.Schema.Types.ObjectId;
-
   @IsString()
   @IsNotEmpty()
   text: string;

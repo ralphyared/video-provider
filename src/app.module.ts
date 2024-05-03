@@ -1,10 +1,23 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { CommentsModule } from './modules/comments/comments.module';
+import { VideosModule } from './modules/videos/videos.module';
+import { RatingsModule } from './modules/ratings/ratings.module';
+import { CommentsController } from './modules/comments/comments.controller';
+import { VideosController } from './modules/videos/videos.controller';
+import { RatingsController } from './modules/ratings/ratings.controller';
+import { ConfigModule } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
+import config from './global/config';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    MongooseModule.forRoot(config().dbConfig.dbUrl),
+    CommentsModule,
+    VideosModule,
+    RatingsModule,
+  ],
+  controllers: [CommentsController, VideosController, RatingsController],
+  providers: [],
 })
 export class AppModule {}
