@@ -19,7 +19,7 @@ export class Video {
   duration: number;
 
   @Prop({ enum: AgeRestriction, default: AgeRestriction.EVERYONE })
-  ageRestriction: string;
+  ageRestriction: number;
 
   @Prop({ default: 0 })
   averageRating: number;

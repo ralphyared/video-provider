@@ -1,6 +1,6 @@
 export enum AgeRestriction {
-  EVERYONE = 'EVERYONE',
-  PG13 = 'PG13',
-  PG16 = 'PG16',
-  MATURE = 'MATURE',
+  EVERYONE = 0,
+  PG13 = 13,
+  PG16 = 16,
+  MATURE = 18,
 }

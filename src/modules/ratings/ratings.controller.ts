@@ -8,33 +8,15 @@ import {
   Delete,
 } from '@nestjs/common';
 import { RatingsService } from './ratings.service';
+import { AddRatingDto } from './dto/add-rating.dto';
+import { IdDto } from 'src/global/common.dto';
 
 @Controller('ratings')
 export class RatingsController {
   constructor(private readonly ratingsService: RatingsService) {}
 
-  @Post()
-  create(@Body() createRatingDto) {
-    return this.ratingsService.create(createRatingDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.ratingsService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.ratingsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRatingDto) {
-    return this.ratingsService.update(+id, updateRatingDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.ratingsService.remove(+id);
+  @Post('/add/:id')
+  addRating(@Body() body: AddRatingDto, @Param() param: IdDto) {
+    return this.ratingsService.addRating(body, param);
   }
 }

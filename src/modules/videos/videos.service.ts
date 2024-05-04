@@ -1,14 +1,25 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Video } from './videos.schema';
 import mongoose, { Model } from 'mongoose';
 import { CreateVideoDto } from './dto/create-video.dto';
 import { GetVideosDto } from './dto/get-videos.dto';
 import { IdDto } from 'src/global/common.dto';
+import moment from 'moment';
+import { REQUEST } from '@nestjs/core';
+import { UserRequest } from 'src/global/types';
 
 @Injectable()
 export class VideosService {
-  constructor(@InjectModel(Video.name) private videoModel: Model<Video>) {}
+  constructor(
+    @InjectModel(Video.name) private videoModel: Model<Video>,
+    @Inject(REQUEST) private readonly request: UserRequest,
+  ) {}
 
   async createVideo(body: CreateVideoDto) {
     const video = new this.videoModel({ ...body });
@@ -33,10 +44,15 @@ export class VideosService {
   }
 
   async playVideo(param: IdDto) {
-    // Check user age restriction
+    const age = moment().diff(this.request.user.dateOfBirth, 'years');
     const video = await this.videoModel.findById(param.id);
     if (!video) {
       throw new NotFoundException('Video not found');
+    }
+    if (age < video.ageRestriction) {
+      throw new ForbiddenException(
+        'You are not old enough to watch this video',
+      );
     }
     return video.url;
   }

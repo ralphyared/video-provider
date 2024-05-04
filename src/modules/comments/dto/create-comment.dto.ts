@@ -1,11 +1,6 @@
-import { IsMongoId, IsNotEmpty, IsString } from 'class-validator';
-import * as mongoose from 'mongoose';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateCommentDto {
-  @IsMongoId()
-  @IsNotEmpty()
-  userId: mongoose.Schema.Types.ObjectId;
-
   @IsString()
   @IsNotEmpty()
   text: string;
