@@ -19,5 +19,5 @@ export class CreateVideoDto {
   duration: number;
 
   @IsEnum(AgeRestriction)
-  ageRestriction: string;
+  ageRestriction: number;
 }

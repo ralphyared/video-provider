@@ -50,9 +50,10 @@ export class VideosService {
       throw new NotFoundException('Video not found');
     }
     if (age < video.ageRestriction) {
-      throw new ForbiddenException(
+      const err = new ForbiddenException(
         'You are not old enough to watch this video',
       );
+      throw err;
     }
     return video.url;
   }

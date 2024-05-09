@@ -8,6 +8,7 @@ import { RatingsController } from './modules/ratings/ratings.controller';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import config from './global/config';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import config from './global/config';
     CommentsModule,
     VideosModule,
     RatingsModule,
+    AuthModule,
   ],
   controllers: [CommentsController, VideosController, RatingsController],
   providers: [],

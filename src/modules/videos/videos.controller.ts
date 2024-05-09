@@ -3,6 +3,7 @@ import { VideosService } from './videos.service';
 import { CreateVideoDto } from './dto/create-video.dto';
 import { GetVideosDto } from './dto/get-videos.dto';
 import { IdDto } from 'src/global/common.dto';
+import { Public } from 'src/global/custom-decorators';
 
 @Controller('videos')
 export class VideosController {
@@ -18,6 +19,7 @@ export class VideosController {
     return this.videosService.createVideo(body);
   }
 
+  @Public()
   @Get('/all')
   async getVideos(@Query() query: GetVideosDto) {
     return this.videosService.getVideos(query);

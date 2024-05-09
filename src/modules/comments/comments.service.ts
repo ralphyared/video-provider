@@ -2,7 +2,7 @@ import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, PipelineStage } from 'mongoose';
+import mongoose, { Model, PipelineStage } from 'mongoose';
 import { IdDto } from 'src/global/common.dto';
 import { Comment } from './comments.schema';
 import { VideosService } from '../videos/videos.service';
@@ -55,14 +55,16 @@ export class CommentsService {
     const reply = new this.commentModel({
       ...body,
       videoId: comment.videoId,
-      parentId: param.id,
+      parentCommentId: param.id,
+      userId: this.request.user._id,
     });
     return reply.save();
   }
 
   async viewAllComments(param: IdDto) {
+    const videoId = new mongoose.Types.ObjectId(param.id.toString());
     return this.commentModel.aggregate([
-      { $match: { videoId: param.id } },
+      { $match: { videoId } },
       { $sort: { createdAt: -1 } },
       { $project: { __v: 0 } },
     ]);
